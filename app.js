@@ -1,10 +1,10 @@
-let event = new Vue();
+const event = new Vue();
 
 Vue.component('one', {
 
     template: `
     <div>
-        <p>Step 1: Enter a pin number: <input v-model="pin" @blur="checkValidity"> </p>
+        <p>Step 1: Enter a pin number: <input v-model="pin" @blur="goToStepTwo"> </p>
     </div>
     `,
 
@@ -16,8 +16,8 @@ Vue.component('one', {
 
     methods: {
 
-        checkValidity () {
-            event.$emit('incorrect-pin');
+        goToStepTwo () {
+            event.$emit('step-two');
         }
 
     }
@@ -27,19 +27,18 @@ Vue.component('two', {
 
     template: `
         <div v-if="showMessage">
-            <p>Step 2: Enter your username:  <input v-model="username"> </p>
+            <p>Step 2: Enter your username:  <input> </p>
         </div>
     `,
 
     data () {
         return {
-            showMessage: false,
-            username: ""
+            showMessage: false
         }
     },
 
     mounted () {
-        event.$on('incorrect-pin', () => this.alertMessageReceived())
+        event.$on('step-two', () => this.alertMessageReceived())
     },
 
     methods: {
